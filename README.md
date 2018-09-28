@@ -1,4 +1,4 @@
-# Ethsescan: Ethereum Smart Contract Automatic security audit Platform
+# Ethsescan: Ethereum smart contract automatic security audit platform
 Based on [mythril](https://github.com/ConsenSys/mythril), we propose Ethsescan, Ethereum Smart Contract Automatic security audit Platform , where users can audit the Smart Contract programed in solidity.<br><br>
 The result will be displayed in types with HighLight, Piechart, Table and Text.
 
