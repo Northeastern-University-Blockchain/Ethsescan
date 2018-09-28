@@ -32,4 +32,4 @@ Apart from this,we show the simple statistics with pie chart and table.<br>
 The detailed result will be displayed at the end of page.<br>
 <div align=center><img width="784" height="443" src="https://github.com/Silence-zyx/Ethsescan/blob/master/ResultInText.png"/></div>
 
-If you have any question, please send message to silence_yongxin@163.com. Good luck. 
+If you have any question, please send message to neublockchain@163.com. Good luck. 
