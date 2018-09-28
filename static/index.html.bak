@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/jstree.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/codemirror.css">
+    <link rel="stylesheet" href="css/eclipse.css">
+    <link type="text/css" rel="stylesheet" href="css/footer.css">
+    <link type="text/css" rel="stylesheet" href="css/hyperchecker.css">
+    <script src="js/demo.js"></script>
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/jstree.min.js"></script>
+    <script src="js/codemirror.js"></script>
+    <script src="js/codemirror-active-line.js"></script>
+    <script src="js/clike.js"></script>
+    <script src="js/securify.js"></script>
+    <script src="js/hyperchecker.js"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121730472-1"></script>
+
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-101783117-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+	<title>以太坊智能合约检测平台</title>
+
+    <link rel="icon" type="image/ico" href="images/favicon.ico">
+
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Securify: Security Scanner for Ethereum Smart Contract">
+    <meta name="twitter:description"
+          content="Scan any Ethereum contract for critical security vulnerabilities for free.">
+    <meta name="twitter:image" content="https://securify.ch/images/og_img.png">
+    <meta property="og:title" content="Securify: Security Scanner for Ethereum Smart Contract"/>
+    <meta property="og:description"
+          content="Scan any Ethereum contract for critical security vulnerabilities for free."/>
+    <meta property="og:url" content="https://securify.ch"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://securify.ch/images/og_img.png">
+</head>
+
+<body>
+<div class="overflow-container">
+    <!-- section-1 -->
+
+    <section class="section-2 container-fluid">
+        <div class="content-container">
+            <div class="container input-container z-index10">
+                <div class="contract-list">
+                    <div class="analysis-progress">
+                        <div class="analysis-progress__counter">
+                            <span class="analysis-progress__done"></span>
+                            <span class="analysis-progress__total"></span>
+                            <span class="analysis-progress__initial">点击按钮扫描合约</span>
+                        </div>
+                    </div>
+                    <div class="analysis-progress__list hidden">
+                      <span class="progress-list__item">
+                          <span class="progress-list__item-wrapper--initial">
+                              <i class="far fa-file" aria-hidden="true"></i>
+                              <span>Contract1</span>
+                          </span>
+                      </span>
+                    </div>
+                </div>
+                <div class="editor-wrapper">
+                    <div class="buttons-editor">
+                        <div class="demo-container">
+                            <form class="scan-now-form form-inline" action="#">
+                                <button href="javascript:void(0)" id="run_btn"
+                                        class="btn btn_light_blue btn-default z-index10">
+                                    开始检测
+                                </button>
+                                <a data-toggle="modal" data-target="#info-scan-now"
+                                   href="javascript:void(0)">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                            </form>
+                        </div>
+                        <div class="upload-type-buttons-container" style="display: none">
+                            <button href="javascript:void(0)" id="paste_code"
+                                    class="btn btn-default demo upload-type-button">
+                                Paste Code
+                            </button>
+                            <button href="javascript:void(0)" id="upload_files"
+                                    class="btn btn-default demo upload-type-button">
+                                Upload Zip
+                            </button>
+                            <button href="javascript:void(0)" id="clone_git"
+                                    class="btn btn-default demo upload-type-button">
+                                Clone Git
+                            </button>
+                        </div>
+                    </div>
+                    <div id="code-input__text" class="codeholder-container">
+                        <div class="codeholder">
+                      <textarea rows="32" cols="120" id="code-main" name="code-main" style="display: none;">
+</textarea>
+                        </div>
+
+                        <div id="code-input__zip" class="upload-type">
+                            <div class="file-upload-container">
+                                <form id="zip-form" class="file-upload-form" name="content">
+                                    <p>
+                                        <i class="fas fa-cloud-download-alt"></i><br><br>
+                                        <span id="drap-drop-text">Click to upload File or Drag & Drop here</span></p>
+                                    <input type="file" name="content" id="zipUpload">
+                                </form>
+                                The ZIP file must contain all contracts
+                            </div>
+                        </div>
+                        <div id="code-input__git" class="upload-type">
+                            <form class="form-inline" action="#">
+                                <div class="form-group input-field">
+                                    <input placeholder="Paste link to your Git repository"
+                                           class="form-control repository smooth-transition" id="git_url"
+                                           value="https://github.com/vkonst/ctd-token.git">
+                                    Support for git repositories is experimental
+                                </div>
+                            </form>
+                        </div>
+                        <div class="terms-and-condition" align="center">
+                            <a data-toggle="modal" data-target="#modal-terms" href="javascript:void(0)">使用本软件，您将接受相关条款</a>
+                        </div>
+                        <!-- code placeholder -->
+                    </div>
+                </div>
+            </div>
+            <div id="div_for_iframe">
+                <div class="upload-error__title">分析结果展示</div>
+                <iframe id="iframe_chart" src="/static/demo.html" width="1200px" height="650px"   frameborder="0"  name="myiframe" scrolling="yes" allowtransparency="true" border="0">
+                </iframe>
+            </div>
+            <div class="upload-error">
+                <div class="upload-error__title">Oops!</div>
+                <div class="upload-error__message">Compiler error: ...</div>
+                <div class="upload-error__info">
+                  <textarea>
+
+                  </textarea>
+                </div>
+            </div>
+
+            <div id="analyzeResult" class="upload-error">
+                <div class="upload-error__title">分析结果展示</div>
+                <!--<div class="upload-error__message"></div>-->
+                <div class="upload-error__info">
+                  <textarea id="resultContent">
+
+                  </textarea>
+                </div>
+            </div>
+
+            <div class="trim-container">
+                <div class="trim trim-white"></div>
+            </div>
+        </div>
+    </section>
+    <!-- section-2 -->
+
+
+    <section id="content_analysis" class="section-4 container-fluid fade in padding-comeback section-blue hidden">
+        <div class="content-container">
+            <div class="container ">
+                <div class="section-4-container">
+                    <h2 class="section-4-head"><span>Security Report</span>
+                        <a class="legend-link" data-toggle="modal" data-target="#modal-legend"
+                           href="javascript:void(0)">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                    </h2>
+                    <a class="feedback" data-toggle="modal" data-target="#feedback-form" href="javascript:void(0)">
+                        <i class="far fa-comment"></i>
+                        <span>
+                      Tell us how to improve
+                      </span>
+                    </a>
+                    <div class="col-xs-12 col-sm-6 padding-0 margin-top-20 security-items-container">
+                        <p class="legend-link-wrapper">
+
+                        </p>
+                        <div class="panel-group" id="accordion">
+                            <div class="total-issues-container">
+                                <div id="issues-found-container">
+                                    <span class="total-text uppercase">Total </span>
+                                    <span class="total-text">issues</span>
+                                    <span class="total-text total-count total-issue-count"></span>
+                                </div>
+                                <div id="no-issues-found-container">
+                                    <span class="total-text">No issues found</span>
+                                </div>
+                            </div>
+                            <div class="report-subcontainer">
+                                <hr class="report-hr">
+                                <span class="report-subcontainer-text">Transaction Reordering</span>
+                                <span class="warning-text total-count transaction-reordering-count"></span>
+                            </div>
+                            <div id="vul_list_TODTransfer" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-TODTransfer" href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse1">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Transactions May Affect Ether Transfer</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        Ether transfers whose execution can be manipulated by other transactions must be
+                                        inspected for unintended behavior.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_TODReceiver" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-TODReceiver" href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse2">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Transactions May Affect Ether Receiver</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse2" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        The receiver of ether transfers must not be influenced by other transactions.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_TODAmount" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-TODAmount" href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse3">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Transactions May Affect Ether Amount</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse3" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        The amount of ether transfered must not be influenced by other transactions.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="report-subcontainer">
+                                <hr class="report-hr--seperator">
+                                <span class="report-subcontainer-text">Recursive Calls</span>
+                                <span class="warning-text total-count recursive-calls-count"></span>
+                            </div>
+                            <div id="vul_list_DAO" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-DAO" href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse4">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Gas-dependent Reentrancy</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse4" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        Calls into exterernal contracts that receive all remaining gas must not be
+                                        followed
+                                        by writes to storage.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_DAOConstantGas" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-DAOConstantGas"
+                                   href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse5">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Reentrancy with constant gas</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse5" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        Ether transfers (such as send/transfer) must not be followed by writes to
+                                        storage.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_DAOMethodCall" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-DAOMethodCall" href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse6">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Reentrant method call</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse6" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        Method calls must not be followed by state changes.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="report-subcontainer">
+                                <hr class="report-hr--seperator">
+                                <span class="report-subcontainer-text">Insecure Coding Patterns</span>
+                                <span class="warning-text total-count insecure-coding-pattern-count"></span>
+                            </div>
+                            <div id="vul_list_UnrestrictedWrite" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-UnrestrictedWrite"
+                                   href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse7">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Unrestricted write to storage</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse7" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        Contract fields that can be modified by any user must be inspected.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_UnhandledException" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-UnhandledException"
+                                   href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse8">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Unhandled Exception</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse8" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        The return value of statements that may return error values must be explicitly
+                                        checked.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_DivisionBeforeMultiply" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-DivisionBeforeMultiply"
+                                   href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse9">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Division Before Multiplication</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse9" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        The use of division before multiplication may result in incorrect final results
+                                        due
+                                        to integer rounding.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_DivisionBeforeCallvalue" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-DivisionBeforeCallvalue"
+                                   href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse10">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Division influences Transfer Amount</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse10" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        The use of division to calculate the amount of transfered ether may be incorrect
+                                        due
+                                        to integer rounding.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_UnprivilegedSuicide" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-UnprivilegedSuicide"
+                                   href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse11">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Unrestricted Selfdestruct</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse11" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        The execution of selfdestrruct statements must be restricted to an authorized
+                                        set of
+                                        users.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_MissingInputValidation" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-MissingInputValidation"
+                                   href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse12">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Missing Input Validation</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse12" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        Method arguments must be sanitized before they are used in computations.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_UseOfOrigin" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-UseOfOrigin" href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse13">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Use Of Origin</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse13" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        The origin statement must not be used.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="report-subcontainer">
+                                <hr class="report-hr--seperator">
+                                <span class="report-subcontainer-text">Unexpected Ether Flows</span>
+                                <span class="warning-text total-count unexpected-ether-flows-count"></span>
+                            </div>
+                            <div id="vul_list_UnrestrictedEtherFlow" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-UnrestrictedEtherFlow"
+                                   href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse14">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Unrestricted ether flow</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse14" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        The execution of ether flows should be restricted to an authorized set of users.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_LockedEther" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-LockedEther" href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse15">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Locked Ether</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse15" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        Contracts that may receive ether must also allow users to extract the deposited
+                                        ether from the contract.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="report-subcontainer">
+                                <hr class="report-hr--seperator">
+                                <span class="report-subcontainer-text">Dependance on unsafe inputs</span>
+                                <span class="warning-text total-count dependance-on-unsafe-inputs-count"></span>
+                            </div>
+                            <div id="vul_list_UnsafeDependanceOnBlock" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-UnsafeDependanceOnBlock"
+                                   href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse16">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Unsafe Dependance On Block Information</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse16" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        Security-sensitive operations must not depend on block information.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_UnsafeDependanceOnGas" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-UnsafeDependanceOnGas"
+                                   href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse17">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Unsafe Dependance On Block Gas</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse17" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        Security-sensitive operations must not depend on gas-related information.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                            <div id="vul_list_DelegateCallWithUserInput" class="panel panel-default expanded">
+                                <a class="info" data-toggle="modal" data-target="#modal-DelegateCallWithUserInput"
+                                   href="#">info</a>
+                                <div class="panel-heading" data-toggle="collapse" href="#collapse18">
+                                    <h4 class="panel-title expand">
+                                        <div class="right-arrow pull-right">
+                                            <span class="glyphicon glyphicon-menu-up"></span>
+                                        </div>
+                                        <span>Delegatecall dependent on user input</span>
+                                    </h4>
+                                </div>
+                                <div id="collapse18" class="panel-collapse collapse in" aria-expanded="true">
+                                    <p class="penal-item description">
+                                        The target and arguments provided to delegatecall must be sanitized.
+                                    </p>
+                                    <div class="vullist clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="trim-container">
+            <div class="trim trim-blue"></div>
+        </div>
+    </section>
+    <!-- section-4 -->
+
+    <section class="contract-audit-section container-fluid hidden">
+        <div class="content-container get-in-touch-content">
+            <h2>Request full audit</h2>
+            <p>
+                Securify scans smart contracts for known vulnerabilities.<br>
+                For a full audit that also covers the specific functionality of your smart contract,
+                contact the security experts at ChainSecurtiy:
+            </p>
+            <a href="mailto:contact@chainsecurity.com">
+                <button class="btn_light_blue">request audit</button>
+            </a>
+        </div>
+        <div class="trim-container">
+            <div class="trim trim-white"></div>
+        </div>
+    </section>
+    <!-- footer -->
+    <div id="feedback-response" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Thank you for your feedback.
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="feedback-form" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-feedback">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Send us your feedback.
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form id="fb-form" action="#">
+                        <input type="text" id="name" placeholder="Name">
+
+                        <input type="text" id="email" placeholder="Email">
+
+                        <textarea id="comment" placeholder="Comment"></textarea>
+
+                        <input class="feedback-submit" type="submit" value="Send">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- info popup -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4 class="modal-title">Title
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra
+                        nec,
+                        mattis ac
+                        neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed
+                        eleifend
+                        tristique,
+                        tortor mauris molestie elit, et lacinia ipsum quam nec dui. Quisque nec mauris sit amet elit
+                        iaculis
+                        pretium
+                        sit amet quis magna. Aenean velit odio, elementum in tempus ut, vehicula eu diam. Pellentesque
+                        rhoncus aliquam
+                        mattis. Ut vulputate eros sed felis sodales nec vulputate justo hendrerit.</p>
+                    <div class="margin-top-30">
+              <textarea rows="17" cols="60" name="code-dialog" style="display: none;">
+                Example .go excerpt
+              </textarea>
+                    </div>
+                    <p class="margin-top-30">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit,
+                        vulputate eu pharetra nec, mattis ac
+                        neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed
+                        eleifend
+                        tristique,
+                        tortor mauris molestie elit, et lacinia ipsum quam nec dui. Quisque nec mauris sit amet elit
+                        iaculis
+                        pretium
+                        sit amet quis magna. Aenean velit odio, elementum in tempus ut, vehicula eu diam
+                        pellentesque.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="modal-TODTransfer" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Transactions May Affect Ether Transfer
+                        </h4>
+                        <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The processing order of transactions may affect whether an ether transfer is executed.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="8">
+                    <textarea rows="13" cols="60" name="code-dialog" style="display: none;">
+  contract Game {
+      bool won = false;
+
+      function play(bytes guess) {
+          require(!won);
+          if (sha3(guess) == 0xDEADBEEF) {
+              won = true;
+              msg.sender.transfer(10 ** 18);
+          }
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        In this example, users must guess an input such that the <i>sha3</i> hash of this input equals
+                        <i>0xDEADBEEF</i>.
+                        The first user who provides the correct input receives 10 ether. The processing order of
+                        transactions may affect whether this ether transfer takes place or not. This is because if two
+                        users
+                        concurrently submit transactions with correct inputs, only the first processed transaction would
+                        result in a transfer of ether while the second user would not be rewarded.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-TODReceiver" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Transactions May Affect Ether Receiver
+                        </h4>
+                        <img class="pull-right modal-close-button/" data-dismiss="modal" src="images/close.png" alt="">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The processing order of transactions may change the receiver of the ether.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="10">
+                    <textarea rows="13" cols="60" name="code-dialog" style="display: none;">
+  contract Game {
+      address winner;
+
+      function play(bytes guess) {
+          if (sha3(guess) == 0xDEADBEEF) {
+              winner = msg.sender;
+          }
+      }
+      function getReward() {
+          winner.transfer(msg.value);
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        In this example, users must guess an input such that the <i>sha3</i> hash of this input equals
+                        <i>0xDEADBEEF</i>.
+                        The user who provides such an input is selected as a winner and can claim a reward by calling
+                        the
+                        <i>getReward()</i> function. In this example, the winner field could be over-written if a second
+                        user also provides a correct input. The receiver of the ether transfer when calling the <i>getReward()</i>
+                        function may change if another winning user submits a correct input. This behavior is
+                        undesirable
+                        and should be avoided.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-TODAmount" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Transactions May Affect Ether Amount
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The processing order of transactions may affect the amount of transferred ether.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="14">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract TokenMarket {
+      mapping(address => uint) balances;
+      uint price = 10;
+      address owner;
+
+      function setPrice(uint newPrice) {
+          if (msg.sender == owner)
+          price = newPrice;
+      }
+
+      function sellTokens() {
+          uint amount = balances[msg.sender];
+          balances[msg.sender] = 0;
+          msg.sender.transfer(amount * price);
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        The contract keeps track of the token balances of users. A user can sell the tokens at the price
+                        specified in the smart contract, by calling the <i>sellTokens()</i> function. The amount of
+                        ether
+                        the user receives for the tokens however may change, because the owner can call the
+                        <i>setPrice</i>
+                        function and changes the token price to a new one. This behavior is undesirable, as users cannot
+                        know at what price their tokens would be sold.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-DAO" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Gas-dependent Reentrancy
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        A contract is exposed to gas-dependent reentrancy if: (1) the amount of transferred ether
+                        depends on
+                        state that gets updated only after the transfer is made and (2) the amount of gas handed to the
+                        caller depends on amount of available gas. The <i>call</i> instruction for ether transfer grants
+                        control over the transaction execution to the ether receiver while handing all available gas,
+                        and
+                        this allows the receiver to call the contract again (before its state is updated) to receive the
+                        same amount of ether again. An attacker can repeat this process until the contract's balance is
+                        drained.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="6">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract Wallet {
+
+      uint balance;
+      function send(){
+      if (balance > 0){
+          msg.sender.call.value(balance)();
+          balance = 0;
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        The balance of the wallet is set to zero out only after it is transfered to the transaction
+                        sender.
+                        This contract is vulnerable to a gas-dependent reentrancy because it uses the
+                        <i>call.value()</i>
+                        statement, which transfers all available gas to <i>msg.sender</i> and also it updates the state
+                        of
+                        the contract (setting the balance to zero) after the <i>call</i> statement is executed.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-DAOConstantGas" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Reentrancy with constant gas
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        A contract is exposed to constant-gas reentrancy if: (1) the contract sends a constant amount of
+                        gas
+                        to the receiver (i.e., it uses either <i>send</i> or <i>transfer</i>) and (2) the contract state
+                        is
+                        updated after the <i>call</i> instruction.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="6">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract Wallet {
+
+      uint balance;
+      function send(){
+      if (balance > 0){
+          msg.sender.call.value(balance)();
+          balance = 0;
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        The balance of the wallet is set to zero out only after it is transfered to the transaction
+                        sender.
+                        This contract is vulnerable to a gas-dependent reentrancy because it uses the
+                        <i>call.value()</i>
+                        statement, which transfers a constant number of gas to <i>msg.sender</i> and also it updates the
+                        state of the contract (setting the balance to zero) after the <i>call</i> statement is executed.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-DAOMethodCall" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Reentrant method call
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        A contract is exposed to a reentrant method call if it makes state changes after calling another
+                        contract.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="22">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract Token {
+      mapping(address => uint) balances;
+      uint totalBalance;
+
+      function mint(address to, uint amount) {
+          balances[to] += amount;
+          totalBalance += amount;
+      }
+
+      function total() returns(uint) {
+          return totalBalance;
+      }
+  }
+
+  contract Crowdsale {
+      Token token;
+      bool finished;
+      uint hardcap;
+
+      function sell(address to, uint amount) {
+          require(!finished);
+          token.mint(to, amount);
+          if (token.total() >= hardcap) {
+              finished = true;
+          }
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-UnrestrictedWrite" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Unrestricted write to storage
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Unrestricted writes indicate parts in the contract storage that are universally writable by all
+                        users. This can be extremely dangerous if the writes are to sensitive fields of the contract,
+                        such
+                        as <i>owner</i>.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="5">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract Owneable {
+    address owner;
+
+    function transferOwnership(address _newOwner) {
+        owner = _newOwner;
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        The <i>owner</i> field in the contract above is universally writable by any user. This is
+                        because
+                        any user can submit a transaction that invokes the <i>transferOwnership</i> function and pass as
+                        an
+                        argument an arbitrary address. An identical bug cause a major security exploit of Parity's
+                        Multisig
+                        wallet in July 2017, which allowed an attacker to hijack ownership over wallets and steal their
+                        ether.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-UnhandledException" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Unhandled Exception
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <i>Call</i> and <i>Send</i> statements returns a non-zero value if an exception occurs during
+                        the
+                        execution of the instruction (e.g., out-of-gas or stack overflow). A contract must check the
+                        return
+                        value of these instructions and throw an exception.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="5">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract SimpleBank {
+      mapping(address => uint) balances;
+
+      function withdraw() {
+          msg.sender.send(balances[msg.sender]);
+          balances[msg.sender] = 0;
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        This contract on ignores the value retuned by the <i>send</i> statement. Consequently, the
+                        balance
+                        of the transaction sender is zeroed out even if the transfer of ether via the call instruction
+                        fails.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-DivisionBeforeMultiply" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Division Before Multiplication
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Using division before multiplication is dangerous as it often results in unexpected result. This
+                        is
+                        because the only numerical type in Solidity is integer, and the result of integer division is
+                        rounded down to the nearest integer.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="6">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract Token {
+      mapping (address => uint) balances;
+
+      function applyReward(address to, uint reward) {
+          require(reward > 0 && reward <= 100);
+          uint rewardAmount = (reward / 100) * balances[to];
+          balances[to] += rewardAmount;
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        This contract attempts to apply a reward percentage to the tokens of a particular user. To do
+                        so,
+                        the contract computes the percentage of the reward, by dividing <i>reward</i> (an integr between
+                        0
+                        and 100) by <i>100</i> and then multiplying the result with the balance of the user. However,
+                        due to
+                        rounding of integer division, the result of <i>reward / 100</i> will always be zero. To prevent
+                        this
+                        undesirable behavior, the contract must first multiply the <i>reward</i> with the balance of the
+                        user and then divide the result by <i>100</i>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-DivisionBeforeCallvalue" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Division influences Transfer Amount
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Integer division results in rounding the result down to the nearest integer. This often results
+                        in
+                        unexpected calculations and developers must be extra cautious when using division to compute the
+                        amount in ether transfers.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="6">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract Token {
+      mapping (address => uint) balances;
+
+      function applyReward(address to, uint reward) {
+          require(reward > 0 && reward <= 100);
+          uint rewardAmount = (reward / 100) * balances[to];
+          to.transfer(rewardAmount);
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        This contract computes a reward for a given user and sends it to that user. The reward is
+                        computed
+                        by dividing the argument <i>reward</i> by <i>100</i>, then multiplying the result by the balance
+                        of
+                        the user and finally sending the reward to the user. The result of <i>reward / 100</i> is
+                        however
+                        always <i>0</i> due to rounding, resulting in unexpected calculation of the user reward.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-UnprivilegedSuicide" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Unrestricted Selfdestruct
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Selfdestruct statements remove the contract from the blockchain and return all its balance to
+                        the
+                        address provided as argument. The execution of the selfdestruct statement must be restricted to
+                        only
+                        those users that are authorized to destroy the contract.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="3">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract Suicidal {
+    function kill() {
+        selfdestruct(msg.sender);
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        This contract does not restrict the execution of the <i>selfdestruct</i> statement in any way.
+                        That
+                        is, any use can call the function <i>kill</i> which will remove the contract and will send all
+                        of
+                        its ether to the transaction sender. Note that this immediately enables any user to steal the
+                        contarct's ether by simply destroying the contract.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-MissingInputValidation" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Missing Input Validation
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Unexpected method arguments may result in insecure contract behaviors. To avoid this, contracts
+                        must
+                        check whether all transaction arguments meet their desired preconditions.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="4">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract SimpleBank {
+      mapping(address => uint) balances;
+
+      function withdraw(uint amount) {
+          balances[msg.sender] -= amount;
+          msg.sender.transfer(amount);
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        This contract does not check the <i>amount</i> argument provided as input to the method
+                        <i>withdraw</i>. This may result in transferring more ether than the transaction sender actually
+                        has
+                        (as stored in <i>balances[msg.sender]</i>). This introduces a critical vulnerability, because
+                        the
+                        value stored in <i>balances[msg.sender]</i> could underflow since for unsigned integers we have
+                        0 -
+                        1 = 2**256 - 1.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-UseOfOrigin" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Use Of Origin
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The statement <i>tx.origin</i> walks all the way up the call stack and returns the address of
+                        the
+                        contract that originated the call. Authorization checks based on the <i>tx.origin</i> can result
+                        in
+                        dangerious callback attacks.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="4">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract UserWallet {
+      address owner = 0x12345678;
+      function send(address dest, uint amount) {
+          require(tx.origin == owner);
+          dest.transfer(amount);
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        This contract compares the owner address to the one returned by <i>tx.origin</i>, which makes
+                        the
+                        code vulnerable to callback attacks where calls originating from the <i>UserWallet</i> contract
+                        are
+                        redirected to the <i>send</i> method to drain the wallet.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-UnrestrictedEtherFlow" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Unrestricted ether flow
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The execution of ether transfers often should be restricted to an authorized set of users. The
+                        scanner reports any ether transfer instructions that can be triggered by an arbitrary user.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="5">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract Wallet {
+    address owner;
+
+      function withdraw() {
+          owner.transfer(msg.value);
+      }
+
+      function () payable {}
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        This wallet contract allows any user to deposit ether into it by calling the default fallback
+                        function. To function <i>withdraw</i> transfers all ether deposited into the contract to the
+                        wallet's owner. However, the execution of this transfer is not restricted, which allows any user
+                        to
+                        trigger the transfer. To fix this, the wallet's owner may want to include a check that would
+                        allow
+                        only the owner to call the <i>withdraw</i> function.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-LockedEther" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Locked Ether
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The locked Ether bug occurs in contracts that can receive ether but do not allow users to
+                        extract
+                        ether from them (nor to destroy them).
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="1">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract MarketPlace {
+      function deposit() payable {
+      }
+
+      function transfer() {
+          uint x = msg.value;
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        This contract is vulnerable to the locked ether vulnerability because it allows users to deposit
+                        ether by calling the <i>deposit</i> function and it does not contain any function that would
+                        allow
+                        users to withdraw the deposted ether.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-UnsafeDependanceOnBlock" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Unsafe Dependance On Block Information
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Unsafe inputs such as those stored in the block should not be used in security critical
+                        operations
+                        such as <i>SHA3</i>, which is often used to generate random numbers, and <i>SSTORE</i>, which
+                        stores
+                        values in the contract's storage.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="5">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract Random {
+      uint256 seed;
+
+      function random() returns (uint256) {
+          seed = uint256(sha3(block.blockhash(block.number), seed));
+          return seed;
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        This contract stores a <i>seed</i>. To generate a random number, it computes the hash of the
+                        block
+                        number and the seed. This, however, is not a secure way to generate random numbers as the block
+                        number can be predicted by attackers.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-UnsafeDependanceOnGas" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Information such as the gas price can be controlled by the transaction sender and must
+                            therefore not
+                            be used in security critical operations such as <i>SHA3</i>, which is often used to generate
+                            random
+                            numbers, and <i>SSTORE</i>, which stores values in the contract's storage.
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        TBD
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="5">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract Random {
+      uint256 seed;
+
+      function random() returns (uint256) {
+          seed = uint256(sha3(tx.gasprice, seed));
+          return seed;
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        This contract stores a <i>seed</i>. To generate a random number, it computes the hash of the gas
+                        price and the seed. This, however, is not a secure way to generate random numbers as the gas
+                        price
+                        can be chosen by the transaction sender.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-DelegateCallWithUserInput" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Delegatecall dependent on user input
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The <i>delegatecall</i> statement enables the contract to execute code of external contracts in
+                        the
+                        context of the current contract. It is therefore critical for the contract to sanitize which
+                        external contract's code is executed and what data is provided to it as an argument.
+                    </p>
+                    <div class="margin-top-30 modal-code-area" data-lines="4">
+                  <textarea rows="15" cols="60" name="code-dialog" style="display: none;">
+  contract Contract {
+
+      function delegate(address lib) {
+        lib.delegatecall(msg.data);
+      }
+  }
+                    </textarea>
+                    </div>
+                    <p class="margin-top-30">
+                        The function <i>delegate</i> of this contract allows any user to execute arbitrary code in the
+                        context of the contract. This is because the user can pass the address of any contract as
+                        argument
+                        <i>lib</i> and any data as part of the transaction data. Both the external contract <i>lib</i>
+                        and
+                        the data <i>msg.data</i> must be sanitized before passing them as arguments to the
+                        <i>delegatecall</i> command.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-legend" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            How to read the security report?
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <!--<img src="images/report-legend.svg" class="legend_img">-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modal-terms" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Terms & Conditions
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <textarea cols="60" rows="20" readonly>
+
+                    </textarea>
+                    <div class="modal-heading">
+                        <h4>
+                            Privacy Policy
+                        </h4>
+                    </div>
+                    <textarea cols="60" rows="20" readonly>
+
+                    </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="info-terms" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Securify Terms of Service
+                        </h4>
+                        <p>
+                            This service by ChainSecurity is free of charge. We accept only legal pieces of code. All
+                            entries are logged for research and improvement of service. ChainSecurity does not warrant
+                            any rights or service levels, nor does it acquire any rights on the code entered. Swiss law
+                            is applicable. The place of jurisdiction is Zurich, Switzerland. By sending code to this
+                            site, you warrant that all your entries are in your sole responsibility and you do not
+                            infringe any laws or third-party rights like copyrights and the like. ChainSecurity and its
+                            employees shall not be liable for any entries and for any damages resulting thereof. You
+                            agree to indemnify, defend and hold them harmless from any legal or financial demands or
+                            arising out of the breach of these terms of use, especially from third-party claims
+                            regarding infringement of copyrights and the like.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="info-scan-now" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            How to read the analysis status?
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="modal-svg-container">
+                        <svg class="scan-now-legend-svg" id="Layer_1" data-name="Layer 1"
+                             xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 592.73 201.68">
+                            <defs>
+                                <style>
+                                    @font-face {
+                                        font-family: 'FontAwesome';
+{#                                        src: url('fonts/fontawesome-webfont.eot?v=4.5.0');#}
+{#                                        src: url('fonts/fontawesome-webfont.eot?#iefix&v=4.5.0') format('embedded-opentype'), url('fonts/fontawesome-webfont.woff2?v=4.5.0') format('woff2'), url('fonts/fontawesome-webfont.woff?v=4.5.0') format('woff'), url('fonts/fontawesome-webfont.ttf?v=4.5.0') format('truetype'), url('fonts/fontawesome-webfont.svg?v=4.5.0#fontawesomeregular') format('svg');#}
+                                        font-weight: normal;
+                                        font-style: normal
+                                    }
+
+                                    .cls-1 {
+                                        fill: #ebf1f7;
+                                        stroke: #b3b3b3;
+                                        stroke-width: 0.68px;
+                                    }
+
+                                    .cls-1, .cls-6 {
+                                        stroke-miterlimit: 10;
+                                    }
+
+                                    .cls-2, .cls-3, .cls-4, .cls-5 {
+                                        font-size: 15px;
+                                    }
+
+                                    .cls-2, .cls-3, .cls-4 {
+                                        fill: #4d4d4d;
+                                    }
+
+                                    .cls-2, .cls-5, .cls-8 {
+                                        font-family: Poppins-Regular,
+                                        Poppins;
+                                    }
+
+                                    .cls-5 {
+                                        fill: #1a1a1a;
+                                    }
+
+                                    .cls-6 {
+                                        fill: none;
+                                        stroke: #ed1c24;
+                                        stroke-width: 3px;
+                                    }
+
+                                    .cls-7 {
+                                        fill: #ed1c24;
+                                    }
+
+                                    .cls-8 {
+                                        font-size: 18px;
+                                    }
+                                </style>
+                            </defs>
+                            <title>analysis-legend</title>
+                            <rect class="cls-1" x="352.12" y="0.34" width="240.27" height="201"/>
+                            <text class="cls-2" transform="translate(422.33 81.25)">SafeMath</text>
+                            <text class="cls-2" transform="translate(422.33 106.25)">Token</text>
+                            <text class="cls-2" transform="translate(422.33 131.25)">Crowdsale</text>
+                            <text class="cls-2" transform="translate(422.33 156.25)">Ownable</text>
+                            <text class="cls-3 font-fa" transform="translate(400.33 81.25)">&#xf15b;</text>
+                            <text class="cls-3 font-fa" transform="translate(399.33 106.25)"></text>
+                            <text class="cls-4 font-fa" transform="translate(405.33 158.25)">&#xf12a;</text>
+                            <text class="cls-4 font-fa" transform="translate(400.33 133.25)">&#xf110;</text>
+                            <text class="cls-5" transform="translate(399.33 46.25)">1/4 contracts Analyzed</text>
+                            <line class="cls-6" x1="332.89" y1="75.34" x2="381.13" y2="75.34"/>
+                            <polygon class="cls-7" points="378.94 82.82 391.89 75.34 378.94 67.86 378.94 82.82"/>
+                            <text class="cls-8" transform="translate(245.1 80.04)">Scanned</text>
+                            <line class="cls-6" x1="332.89" y1="100.34" x2="381.13" y2="100.34"/>
+                            <polygon class="cls-7" points="378.94 107.82 391.89 100.34 378.94 92.86 378.94 107.82"/>
+                            <text class="cls-8" transform="translate(136.22 105.04)">Queued for scanning</text>
+                            <line class="cls-6" x1="332.89" y1="127.34" x2="381.13" y2="127.34"/>
+                            <polygon class="cls-7" points="378.94 134.82 391.89 127.34 378.94 119.86 378.94 134.82"/>
+                            <text class="cls-8" transform="translate(102.87 132.04)">Currently being scanned</text>
+                            <line class="cls-6" x1="332.89" y1="152.34" x2="381.13" y2="152.34"/>
+                            <polygon class="cls-7" points="378.94 159.82 391.89 152.34 378.94 144.86 378.94 159.82"/>
+                            <text class="cls-8" transform="translate(185.86 157.04)">Scanning failed</text>
+                            <line class="cls-6" x1="332.89" y1="43.34" x2="381.13" y2="43.34"/>
+                            <polygon class="cls-7" points="378.94 50.82 391.89 43.34 378.94 35.86 378.94 50.82"/>
+                            <text class="cls-8" transform="translate(0 48.04)">Number of contracts scanned so far</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            What contrats are supported?
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>Solidity with pragma version 0.4.11 up to 0.4.24</li>
+                        <li>npm dependencies are supported.</li>
+                        <li>Directory remappings not depending on npm are not done during compilation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-news" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Stay up to date!
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        By signing up, we will inform you about changes and news about Securify!
+                    </p>
+                    Enter your e-mail address
+                    <input placeholder="E-mail" class="form-control repository smooth-transition" id="email_news">
+                    <div class="news_btn-container">
+                        <button href="javascript:void(0)" class="btn news_btn" id="submit-sign-up">
+                            Sign up
+                        </button>
+                        <button href="javascript:void(0)" data-dismiss="modal" class="btn news_btn">
+                            go back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-news-ty" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-heading">
+                        <h4>
+                            Thank you for Signing up!
+                            <img class="pull-right" data-dismiss="modal" src="images/close.png" alt="">
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        We will inform you as soon as we have any news about Securify!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="matched_pattern_tip">
+        <div id="matched_pattern_tip-TODTransfer" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Transactions May Affect Ether Transfer
+            </div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-TODTransfer" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-TODReceiver" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Transactions May Affect Ether Receiver</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-TODReceiver" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-TODAmount" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Transactions May Affect Ether Amount</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-TODAmount" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-DAO" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Reentrant method call</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-DAO" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-DAOConstantGas" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Reentrancy with constant gas</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-DAOConstantGas" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-DAOMethodCall" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Reentrant method call</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-DAOMethodCall" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-UnrestrictedWrite" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Unrestricted write to storage</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-UnrestrictedWrite" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-UnhandledException" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Unhandled Exception</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-UnhandledException" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-DivisionBeforeMultiply" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Division Before Multiplication</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-DivisionBeforeMultiply" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-DivisionBeforeCallvalue" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Division influences Transfer Amount</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-DivisionBeforeCallvalue" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-UnprivilegedSuicide" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Unrestricted Selfdestruct</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-UnprivilegedSuicide" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-MissingInputValidation" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Missing Input Validation</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-MissingInputValidation" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-UseOfOrigin" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Use Of Origin</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-UseOfOrigin" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-UnrestrictedEtherFlow" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Unrestricted ether flow</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-UnrestrictedEtherFlow" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-LockedEther" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Locked Ether</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-LockedEther" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-UnsafeDependanceOnBlock" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Unsafe Dependance On Block Information</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-UnsafeDependanceOnBlock" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-UnsafeDependanceOnGas" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Unsafe Dependance On Block Gas</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-UnsafeDependanceOnGas" href="#">info</a>
+            </div>
+        </div>
+        <div id="matched_pattern_tip-DelegateCallWithUserInput" class="matched_pattern_tip_item">
+            <div class="matched_pattern_tip_label">Delegatecall dependent on user input</div>
+            <div class="matched_pattern_tip_info">
+                <a class="info" data-toggle="modal" data-target="#modal-DelegateCallWithUserInput" href="#">info</a>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="footer">
+        <div class="content-container" style="display:none">
+            <div class="container">
+                <div class="footer__inner">
+                    <p class="copyrights">&copy; Copyright 2018. <a href="https://chainsecurity.com" target="_blank">ChainSecurity</a>
+                    </p>
+                    <!-- /.copyrights -->
+                    <p></p>
+                    <a href="http://ice.ethz.ch/" target="_blank" class="footer__logo">ICE</a>
+                </div>
+                <!-- /.footer__inner -->
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

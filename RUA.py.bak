@@ -1,0 +1,12 @@
+import mythril.interfaces.cli
+
+# if __name__ == "__main__":
+#     # print("*&*(^*&^&%$$%%%*&*&(*")
+#     issues = mythril.interfaces.cli.main()
+#     print(issues)
+
+
+class RUA:
+    def __init__(self,file):
+        self.issues,self.flag = mythril.interfaces.cli.mymain(file)
+
