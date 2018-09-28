@@ -1,5 +1,5 @@
 # Ethsescan: Ethereum Smart Contract Automatic security audit Platform
-Based on [mythril](https://github.com/ConsenSys/mythril), we propose Ethsescan, Ethereum Smart Contract Automatic security audit Platform , where users can audit the Smart Contract programed in solidity.<br>
+Based on [mythril](https://github.com/ConsenSys/mythril), we propose Ethsescan, Ethereum Smart Contract Automatic security audit Platform , where users can audit the Smart Contract programed in solidity.<br><br>
 The result will be displayed in types with HighLight, Piechart, Table and Text.
 
 ## Environment:
@@ -13,7 +13,7 @@ PyCharm：Professional
 To compile the file .sol, you'll also need the [solc](https://solidity.readthedocs.io/en/v0.4.21/installing-solidity.html#binary-packages).
 
 ## How to run it
-You can run the project in PyCharm then type 127.0.0.1:8000/static/index.html to enter the page.<br>
+You can run the project in PyCharm then type *127.0.0.1:8000/static/index.html* to enter the page.<br>
 The result is like this:<br>
 <div align=center><img width="784" height="443" src="https://github.com/Silence-zyx/Ethsescan/blob/master/Index.png"/></div>
 
